@@ -6,6 +6,7 @@ import pytesseract
 import mysql.connector
 from PIL import Image, ImageTk
 
+#Define path to tesseract module
 path_to_tesseract = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
 pytesseract.tesseract_cmd = path_to_tesseract
 
@@ -16,8 +17,11 @@ db = mysql.connector.connect(
     database = "allergendatabase"
 )
 
+#mycursor.execute("CREATE DATABASE allergendatabase")
+
 mycursor = db.cursor()
 
+#defining main window (tkinter)
 root = Tk()
 root.wm_title("Allergen Checker")
 
@@ -27,6 +31,7 @@ screen_height = root.winfo_screenheight()
 app_height = 700
 app_width = 1000
 
+#storing variables for each checkbox(on and off-checked vals)
 milk = tk.StringVar()
 treeNuts = tk.StringVar()
 gluten = tk.StringVar()
@@ -38,6 +43,8 @@ sesame = tk.StringVar()
 root.geometry(f'{app_width}x{app_height}+{int(screen_width/2 - app_width/2)}+{int(screen_height/2- app_height/2)}')
 
 
+#within a given allergen, variants to look out for:
+
 treeNutList = ['walnut', 'tree nut', 'almond', 'pecan', 'pistachio',
                'walnuts', 'tree nuts', 'almonds', 'pecans', 'pistachios']
 
@@ -47,9 +54,11 @@ shellfishList = ['crab', 'lobster', 'fish', 'crustacean', 'oyster']
 allergensToFind = []
 imageLoaded = False
 
+
 imageLabel = Label()
 warningLabel = Label()
 
+#Functionality via askopenfile to open and scan for proper file tyles, update GUI accordingly
 def open_file():
     path = askopenfile(mode='r', filetypes=[('Image Files', ['*jpeg', '*png', '*jpg'])])
     global pathName
@@ -72,7 +81,7 @@ def open_file():
         choose['state'] = 'disabled'
         pass
 
-
+# if logged in, labels to upload and scan file are made, deleting others
 def loggedIn():
     global warningLabel
     warningLabel.destroy()
@@ -88,6 +97,8 @@ def loggedIn():
     choose = tk.Button(root, text = 'Choose Ingredients Label File', font = 'Times 20', command = lambda:(open_file()))
     choose.pack(pady = 10)
 
+
+# once selected, finding the allergens happens via adding all checked box allergens to array to scan through
 def findAllergens():
     if imageLoaded:
         print("Value Extraction Started")
@@ -114,9 +125,8 @@ def findAllergens():
                 allergensToFind.append(fish)
         if sesame.get() == 'find':
             allergensToFind.append('sesame')
+
         global pathName
-        print(pathName)
-        print(allergensToFind)
         img = Image.open(pathName)
         text = pytesseract.image_to_string(img)
 
@@ -140,10 +150,13 @@ def findAllergens():
         Label(root, text = "Must Choose A File Before Finding Its Allergy Contents").pack(pady = 10)
 
 
+#Warning label if checked allergen is present in food label
 def allergenInFood(s):
     Label(text = f"ALLERGEN SELECTED IS PRESENT IN FOOD \n DO NOT CONSUME \n Allergen Present is {s.upper()}",
           font = 'Times 30', bg = 'red').pack(pady = 10)
 
+
+#makes a new account, if user selects this, sends it to connected dbs
 def makeNewAcct():
     global newAcct, warningLabel, signIn
     signIn.destroy()
@@ -160,6 +173,8 @@ def makeNewAcct():
     confButton = ttk.Button(root, text = "Make New Account", command = lambda:(genUserDetails(confirmpw, reenterpw, enterAllergens, allergens, confButton)))
     confButton.pack(pady = 10)
 
+
+#generates the new user details, and, provided pw and username are correct, makes a new entry in user table
 def genUserDetails(l1, e1, l2, e2, b1):
     global username, password
     print(username.get())
@@ -195,6 +210,7 @@ def genUserDetails(l1, e1, l2, e2, b1):
         warningLabel.pack(pady = 10)
 
 
+#tries to login if a user has already registered
 def tryLogin():
     mycursor.execute(f"SELECT * FROM User WHERE name = '{username.get()}' AND password = '{password.get()}'")
     global warningLabel
