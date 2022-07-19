@@ -13,7 +13,7 @@ pytesseract.tesseract_cmd = path_to_tesseract
 db = mysql.connector.connect(
     host = "localhost",
     user = "root",
-    passwd = "****************",
+    passwd = "LolNiceTry:)0001!",
     database = "allergendatabase"
 )
 
@@ -54,7 +54,6 @@ shellfishList = ['crab', 'lobster', 'fish', 'crustacean', 'oyster']
 allergensToFind = []
 imageLoaded = False
 
-
 imageLabel = Label()
 warningLabel = Label()
 
@@ -74,11 +73,10 @@ def open_file():
         imageLabel = Label(text = "Hello", image = foodLabel)
         imageLabel.pack(pady = 10)
         print("Hello")
+        root.geometry(f'{app_width}x{screen_height}+{int(screen_width / 2 - app_width / 2)}+{int(0)}')
 
         global choose
-        choose['text'] = 'File Has Been Uploaded'
-        choose['bg'] = 'green'
-        choose['state'] = 'disabled'
+        choose['text'] = "File Selected"
         pass
 
 # if logged in, labels to upload and scan file are made, deleting others
@@ -176,13 +174,14 @@ def makeNewAcct():
 
 #generates the new user details, and, provided pw and username are correct, makes a new entry in user table
 def genUserDetails(l1, e1, l2, e2, b1):
-    global username, password
+    global username, password, warningLabel
     print(username.get())
     if e1.get() == password.get() and len(e1.get()) > 6:
         print("Good PW")
         mycursor.execute(f"SELECT * FROM User WHERE name = '{username.get()}'")
         if mycursor.rowcount < 1:
             mycursor.fetchall()
+            warningLabel.destroy()
             l1.destroy()
             e1.destroy()
             l2.destroy()
