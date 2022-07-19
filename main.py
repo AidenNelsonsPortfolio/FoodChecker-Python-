@@ -13,7 +13,7 @@ pytesseract.tesseract_cmd = path_to_tesseract
 db = mysql.connector.connect(
     host = "localhost",
     user = "root",
-    passwd = "LolNiceTry:)0001!",
+    passwd = "****************",
     database = "allergendatabase"
 )
 
