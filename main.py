@@ -17,7 +17,11 @@ db = mysql.connector.connect(
     database = "allergendatabase"
 )
 
+#Below are the commands (with proper modules imported and pip installed, and mySQL server being running) to make, and add a table to, a database 
+#Not necessary to do after first run (or if a database/table is already present on connected server
+
 #mycursor.execute("CREATE DATABASE allergendatabase")
+#mycursor.execute("CREATE TABLE User (name VARCHAR(20), password VARCHAR(20), allergens VARCHAR(50), personID int PRIMARY KEY AUTO_INCREMENT)")
 
 mycursor = db.cursor()
 
