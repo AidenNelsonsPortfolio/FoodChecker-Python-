@@ -4,4 +4,9 @@ Stores user login info in DBS, connected via pip module (MySQL).
 
 The app was built because a food allergy that is in the family, making it easier to check foods online with only an ingredients label than it was previously.
 
+Must be connected to local dbs, as mySQL was not globally stored on cloud as of writing. 
+
+Commands are commented out that would be required to initialize new dbs and table before the usage of the password and username storing features.
+(See script)
+
 Additional support for webcamera scanning on todo.
