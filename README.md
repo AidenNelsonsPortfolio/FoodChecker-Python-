@@ -1,8 +1,6 @@
 # FoodChecker-Python-
-Food Checking App that utilizes AI and ML to scan passed image for potentially dangerous allergens, selected by user. 
+Food Checking App that utilizes AI to scan a passed image for potentially dangerous allergens, selected by user. 
 Stores user login info in DBS, connected via pip module (MySQL).
-
-Written in a PyCharm IDE using Python 3.9
 
 The app was built because a food allergy that is in the family, making it easier to check foods online with only an ingredients label than it was previously.
 
@@ -32,6 +30,8 @@ Commands are commented out that would be required to initialize new dbs and tabl
 (See script)
 
 Additional support for webcamera scanning on todo.
+
+Written in a PyCharm IDE using Python 3.9
 
 Author: Aiden Nelson
 
