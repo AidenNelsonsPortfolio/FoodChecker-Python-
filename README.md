@@ -29,8 +29,6 @@ The app must be connected to local dbs, as mySQL was not globally stored on clou
 Commands are commented out that would be required to initialize new dbs and table before the usage of the password and username storing features.
 (See script)
 
-Additional support for webcamera scanning on todo.
-
 Written in a PyCharm IDE using Python 3.9
 
 Author: Aiden Nelson
